@@ -24,11 +24,11 @@ class IndexView(TemplateView):
 
 """metodo que atualiza os likes"""
 def put_like(request, id):
-    obra = Obra.objects.get(id=id)
+    _obra = Obra.objects.get(id=id)
     
     if request.method == 'POST':
-        obra.like += 1
-        obra.save()
+        _obra.like += 1
+        _obra.save()
 
     context = {}
     context['filmes'] = Filme.objects.order_by('?').all()
@@ -37,11 +37,11 @@ def put_like(request, id):
 
 """metodo que atualiza os dislikes"""
 def put_deslike(request, id):
-    obra = Obra.objects.get(id=id)
+    _obra = Obra.objects.get(id=id)
     
     if request.method == 'POST':
-        obra.deslike += 1
-        obra.save()
+        _obra.deslike += 1
+        _obra.save()
 
 
     context = {}
@@ -51,11 +51,11 @@ def put_deslike(request, id):
 
 """metodo que atualiza os downloads"""
 def put_download(request, id):
-    obra = Obra.objects.get(id=id)
+    _obra = Obra.objects.get(id=id)
     
     if request.method == 'POST':
-        obra.download += 1
-        obra.save()
+        _obra.download += 1
+        _obra.save()
 
 
     context = {}
