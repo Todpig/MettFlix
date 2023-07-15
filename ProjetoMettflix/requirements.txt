@@ -7,6 +7,7 @@ charset-normalizer==3.1.0
 dd==0.5.7
 Django==4.2.3
 django-stdimage==6.0.1
+django-storages==1.13.2
 docutils==0.20.1
 idna==3.4
 jmespath==1.0.1
