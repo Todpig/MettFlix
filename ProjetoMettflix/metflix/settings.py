@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "core",
+    "storages",
 ]
 
 MIDDLEWARE = [
@@ -117,7 +118,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = '/static/'
-MEDIA_URL = '/media/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
@@ -130,3 +130,17 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 CSRF_TRUSTED_ORIGINS = ["http://lanele.vitorrafael.com.br"]
+
+AWS_ACCESS_KEY_ID = 'AKIA43ZQKQIQTZEBHYNO'
+AWS_SECRET_ACCESS_KEY = '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'
+AWS_STORAGE_BUCKET_NAME = 'lanele'
+AWS_S3_SIGNATURE_NAME = 's3v4',
+AWS_S3_REGION_NAME = 'us-east-2'
+AWS_S3_FILE_OVERWRITE = False
+AWS_DEFAULT_ACL = None
+AWS_S3_VERITY = True
+AWS_STATIC_LOCATION = 'static'
+AWS_PUBLIC_MEDIA_LOCATION = 'media'
+AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
+MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{AWS_STATIC_LOCATION}/'
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
