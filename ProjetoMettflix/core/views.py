@@ -19,7 +19,7 @@ class IndexView(TemplateView):
         sqs.delete_message(QueueUrl=URL_SQS,
                            ReceiptHandle=receipt_handle)
 
-    def retrieve_sqs_messages(self):  # Add 'self' as the first parameter
+    def retrieve_sqs_messages(self):
         response = sqs.receive_message(
             QueueUrl=URL_SQS, MaxNumberOfMessages=10
         )
@@ -32,11 +32,9 @@ class IndexView(TemplateView):
         return messages
 
     def get_context_data(self, **kwargs):
-        # Use super() instead of super(IndexView, self)
         context = super().get_context_data(**kwargs)
         context['filmes'] = Filme.objects.all()
         context['series'] = Serie.objects.all()
-        # Add 'self' before retrieve_sqs_messages()
         context['messages'] = self.retrieve_sqs_messages()
         context['data'] = datetime.today()
         return context
