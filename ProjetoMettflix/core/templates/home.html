@@ -1,29 +1,44 @@
-{% block content %}
-{% load static %}
+{% block content %} {% load static %}
 <div class="banner">
-    <img src="{% static 'img/bg.jpg' %}" class="bg">
+  <img src="{% static 'img/bg.jpg' %}" class="bg" />
 
-    <div class="content">
-        <img src="{% static 'img/name.png' %}" class="movieTitle">
-        <h4>
-            <span>2020</span>
-            <span><i>12+</i></span>
-            <span>1h 55min</span>
-            <span>Ação</span>
-        </h4>
-        <p>
-            Para salvar seu pai doente de servir no Exército Imperial, uma jovem destemida se disfarça de homem para lutar contra os invasores do norte da China.
-        </p>
+  <div class="content">
+    <img src="{% static 'img/name.png' %}" class="movieTitle" />
+    <h4>
+      <span>2020</span>
+      <span><i>12+</i></span>
+      <span>1h 55min</span>
+      <span>Ação</span>
+    </h4>
+    <p>
+      Para salvar seu pai doente de servir no Exército Imperial, uma jovem
+      destemida se disfarça de homem para lutar contra os invasores do norte da
+      China.
+    </p>
 
-        <div class="buttons">
-            <a href="#"><i class="fa fa-play" aria-hidden="true"></i> Play</a>
-        </div>
+    <div class="buttons">
+      <a href="#"><i class="fa fa-play" aria-hidden="true"></i> Play</a>
     </div>
-    <a class="play" onclick="toggleVideo()"><img src="{% static 'img/play.png' %}">Assistir Trailer</a>
+  </div>
+  <a class="play" onclick="toggleVideo()"
+    ><img src="{% static 'img/play.png' %}" />Assistir Trailer</a
+  >
 </div>
 
 <div class="trailer">
-    <video src="{% static 'img/video.mp4'%}" controls="true"></video>
-    <img src="{% static 'img/close.png' %}" class="close" onclick="toggleVideo()">
+  <video src="{% static 'img/video.mp4'%}" controls="true"></video>
+  <img
+    src="{% static 'img/close.png' %}"
+    class="close"
+    onclick="toggleVideo()"
+  />
 </div>
+<script>
+  var messages = {{ messages|safe }};
+  if (messages.length > 0) {
+    messages.forEach(function (message) {
+      alert(message);
+    });
+  }
+</script>
 {% endblock %}

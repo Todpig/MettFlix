@@ -4,7 +4,7 @@
   <div class="obras">
     {% for filme in filmes %}
     <!-- obra -->
-    {% if filme.ativo %}
+
     <div class="obra">
       <a href="{% url 'obra' filme.slug %}" target="_blank">
         <img
@@ -57,7 +57,7 @@
       </div>
       <!-- fim obra -->
     </div>
-    {% endif %} {% endfor %}
+    {% endfor %}
   </div>
 </section>
 
