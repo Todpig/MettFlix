@@ -15,20 +15,25 @@ class IndexView(TemplateView):
     template_name = "index.html"
     success_url = reverse_lazy("index")
 
-    def delete_sqs_message(self, receipt_handle):
+    def extract_messages_from_response(self, response):
+        messages = []
+        if "Messages" in response:
+            messages = [message["Body"] for message in response["Messages"]]
+            print("Message: ", messages)
+            for message in response["Messages"]:
+                receipt_handle = message["ReceiptHandle"]
+                self.delete_message(receipt_handle)
+        return messages
+
+    def delete_message(self, receipt_handle):
         sqs.delete_message(QueueUrl=URL_SQS, ReceiptHandle=receipt_handle)
         print("Message deleted")
 
     def retrieve_sqs_messages(self):
         response = sqs.receive_message(QueueUrl=URL_SQS, MaxNumberOfMessages=10)
-        messages = []
-        if "Messages" in response:
-            for message in response["Messages"]:
-                message_body = message["Body"]
-                messages.append(message_body)
-                self.delete_sqs_message(message["ReceiptHandle"])
-        print(messages)
-        return messages
+        messages = self.extract_messages_from_response(response)
+        if messages:
+            return messages
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -88,7 +93,11 @@ def put_download(request, id):
 
 
 class CreateFilmeView(TemplateView):
-    template_name = "createObra.html"
+    template_name = "createFilme.html"
+
+
+class CreateSerieView(TemplateView):
+    template_name = "createSerie.html"
 
 
 """class que renderiza a pagina login"""

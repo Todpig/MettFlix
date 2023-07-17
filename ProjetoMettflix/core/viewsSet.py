@@ -48,9 +48,20 @@ class SerieViewSet(viewsets.ModelViewSet):
     queryset = Serie.objects.all()
     serializer_class = SerieSerializer
 
+    def send_message(self, message_body, message_group_id):
+        sqs.send_message(
+            QueueUrl=URL_SQS,
+            MessageBody=message_body,
+            MessageGroupId=message_group_id,
+            MessageDeduplicationId=str(uuid.uuid4()),
+        )
+
     def create(self, request, *args, **kwargs):
         response = super().create(request, *args, **kwargs)
         if response.status_code == 201:
-            # Redireciona para a página "index"
+            serie_criada = response.data
+            titulo_do_filme = serie_criada["titulo"]
+            message = f"A série {titulo_do_filme} foi criada com sucesso :)"
+            self.send_message(message, titulo_do_filme)
             return redirect(reverse("index"))
         return response
